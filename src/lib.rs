@@ -108,6 +108,9 @@ impl Component for Model {
                         </div>
                     </div>
                 </div>
+                <footer>
+                    <p>{ "Made by " } <a href="https://odindutton.com">{ "Odin" }</a></p>
+                </footer>
             </>
         }
     }
