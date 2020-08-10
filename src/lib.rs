@@ -84,28 +84,31 @@ impl Component for Model {
         let date_percent_complete = ((now - start) / (end - start)) * 100.0;
 
         html! {
-            <div class="container">
-                <label for="level" title={ format!("{} XP", self.levels[self.level()]) }>
-                    { format!("Level ({}) - {} (Cumulative) / {} XP", self.level(), cumulative_xp, self.total_xp) }
-                </label>
-                <input type="number"
-                    min=0
-                    max=50
-                    inputmode="numeric"
-                    value=&self.level
-                    ref=self.node_ref.clone()
-                    id="level"
-                    oninput=self.link.callback(|e: InputData| Msg::Update(e.value)) />
+            <>
+                <h1>{ "Valorant Battlepass Tracker" }</h1>
+                <div class="container">
+                    <label for="level" title={ format!("{} XP", self.levels[self.level()]) }>
+                        { format!("Level ({}) - {} (Cumulative) / {} XP", self.level(), cumulative_xp, self.total_xp) }
+                    </label>
+                    <input type="number"
+                        min=0
+                        max=50
+                        inputmode="numeric"
+                        value=&self.level
+                        ref=self.node_ref.clone()
+                        id="level"
+                        oninput=self.link.callback(|e: InputData| Msg::Update(e.value)) />
 
-                <div class="progress-bar">
-                    <div style={ format!("background: linear-gradient(90deg, #a66fed {}%, #f0cdf5 {}%);", percent_complete, percent_complete) }>
-                        <span>{ format!("Percent complete: {:.1}%", percent_complete) }</span>
-                    </div>
-                    <div style={ format!("background: linear-gradient(90deg, #754da8 {}%, #d196d9 {}%);", date_percent_complete, date_percent_complete) }>
-                        { format!("Percent time complete: {:.1}% (ends 2020-10-12)", date_percent_complete) }
+                    <div class="progress-bar">
+                        <div style={ format!("background: linear-gradient(90deg, #a66fed {}%, #f0cdf5 {}%);", percent_complete, percent_complete) }>
+                            <span>{ format!("Percent complete: {:.1}%", percent_complete) }</span>
+                        </div>
+                        <div style={ format!("background: linear-gradient(90deg, #754da8 {}%, #d196d9 {}%);", date_percent_complete, date_percent_complete) }>
+                            { format!("Percent time complete: {:.1}% (ends 2020-10-12)", date_percent_complete) }
+                        </div>
                     </div>
                 </div>
-            </div>
+            </>
         }
     }
 }
