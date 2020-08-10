@@ -97,6 +97,7 @@ impl Component for Model {
                         value=&self.level
                         ref=self.node_ref.clone()
                         id="level"
+                        placeholder="Your current level"
                         oninput=self.link.callback(|e: InputData| Msg::Update(e.value)) />
 
                     <div class="progress-bar">
