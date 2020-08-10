@@ -88,7 +88,10 @@ impl Component for Model {
                 <label for="level" title={ format!("{} XP", self.levels[self.level()]) }>
                     { format!("Level ({}) - {} (Cumulative) / {} XP", self.level(), cumulative_xp, self.total_xp) }
                 </label>
-                <input type="text"
+                <input type="number"
+                    min=0
+                    max=50
+                    inputmode="numeric"
                     value=&self.level
                     ref=self.node_ref.clone()
                     id="level"
