@@ -8,9 +8,7 @@ use yew::web_sys::HtmlInputElement as InputElement;
 struct Model {
     node_ref: NodeRef,
     link: ComponentLink<Self>,
-    levels: Vec<usize>,
     level: String,
-    total_xp: usize,
 }
 
 impl Model {
@@ -21,6 +19,22 @@ impl Model {
         } else {
             0
         }
+    }
+
+    fn xp_for_level(&self, level: usize) -> usize {
+        if level >= 2 {
+            (level + 2) * 1000
+        } else {
+            0
+        }
+    }
+
+    fn total_xp(&self) -> usize {
+        self.cumulative_xp_to_level(50)
+    }
+
+    fn cumulative_xp_to_level(&self, level: usize) -> usize {
+        (0..=level).map(|l| self.xp_for_level(l)).sum::<usize>()
     }
 }
 
@@ -33,22 +47,9 @@ impl Component for Model {
     type Properties = ();
 
     fn create(_: Self::Properties, link: ComponentLink<Self>) -> Self {
-        let mut levels = Vec::new();
-        levels.push(0); // Level 0
-        levels.push(0); // Level 1
-        let mut xp = 4000;
-        for _ in 2..=50 {
-            levels.push(xp);
-            xp += 1000;
-        }
-
-        let total_xp = levels.iter().sum::<usize>();
-
         Self {
             link,
-            levels,
             level: "15".to_string(),
-            total_xp,
             node_ref: NodeRef::default(),
         }
     }
@@ -73,8 +74,8 @@ impl Component for Model {
     }
 
     fn view(&self) -> Html {
-        let cumulative_xp = self.levels[0..=self.level()].iter().sum::<usize>();
-        let percent_complete = (cumulative_xp as f32 / self.total_xp as f32) * 100.0;
+        let cumulative_xp = self.cumulative_xp_to_level(self.level());
+        let percent_complete = (cumulative_xp as f32 / self.total_xp() as f32) * 100.0;
 
         // Act 2 start and end dates
         let start = Date::parse("2020-08-04");
@@ -87,8 +88,8 @@ impl Component for Model {
             <>
                 <h1>{ "Valorant Battlepass Tracker" }</h1>
                 <div class="container">
-                    <label for="level" title={ format!("{} XP", self.levels[self.level()]) }>
-                        { format!("Level ({}) - {} (Cumulative) / {} XP", self.level(), cumulative_xp, self.total_xp) }
+                    <label for="level" title={ format!("{} XP", self.xp_for_level(self.level())) }>
+                        { format!("Level ({}) - {} (Cumulative) / {} XP", self.level(), cumulative_xp, self.total_xp()) }
                     </label>
                     <input type="number"
                         min=0
