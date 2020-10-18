@@ -77,9 +77,9 @@ impl Component for Model {
         let cumulative_xp = self.cumulative_xp_to_level(self.level());
         let percent_complete = (cumulative_xp as f32 / self.total_xp() as f32) * 100.0;
 
-        // Act 2 start and end dates
-        let start = Date::parse("2020-08-04");
-        let end = Date::parse("2020-10-12");
+        // Act 3 start and end dates
+        let start = Date::parse("2020-10-13");
+        let end = Date::parse("2021-01-11");
 
         let now = Date::now();
         let date_percent_complete = ((now - start) / (end - start)) * 100.0;
@@ -106,7 +106,7 @@ impl Component for Model {
                             <span>{ format!("Percent complete: {:.1}%", percent_complete) }</span>
                         </div>
                         <div style={ format!("background: linear-gradient(90deg, #754da8 {}%, #d196d9 {}%);", date_percent_complete, date_percent_complete) }>
-                            { format!("Percent time complete: {:.1}% (ends 2020-10-12)", date_percent_complete) }
+                            { format!("Percent time complete: {:.1}% (ends 2021-01-11)", date_percent_complete) }
                         </div>
                     </div>
                 </div>
