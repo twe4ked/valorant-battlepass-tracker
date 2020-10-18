@@ -91,7 +91,7 @@ impl Component for Model {
 
         html! {
             <>
-                <h1>{ "Valorant Battlepass Tracker" }</h1>
+                <h1>{ "VALORANT Battlepass Tracker" }</h1>
                 <div class="container">
                     <label for="level" title={ format!("{} XP", self.xp_for_level(self.level())) }>
                         { format!("Level ({}) - {} (Cumulative) / {} XP", self.level(), cumulative_xp, self.total_xp()) }
